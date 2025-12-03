@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: gitops/frontend
-  tag: "1.0.0"
+  tag: "latest"
 
 resources:
   limits:
