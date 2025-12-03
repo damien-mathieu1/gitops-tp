@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+
+resources:
+  limits:
+    memory: "4Gi"
+    cpu: "2000m"
+  requests:
+    memory: "2Gi"
+    cpu: "1000m"
+
+persistence:
+  enabled: true
+  size: 20Gi
+  storageClass: "fast-ssd"
+
+secrets:
+  username: "prod_user"
+  password: "prod_secure_password_789"
+  database: "appdb"
+
+environment: production
+syncWave: "0"

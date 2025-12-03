@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+
+resources:
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+
+persistence:
+  enabled: true
+  size: 5Gi
+
+secrets:
+  username: "staging_user"
+  password: "staging_password_456"
+  database: "appdb"
+
+environment: staging
+syncWave: "0"

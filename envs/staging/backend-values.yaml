@@ -1,0 +1,30 @@
+replicaCount: 2
+
+image:
+  repository: your-registry/backend
+  tag: "1.0.0"
+
+resources:
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+
+config:
+  dbHost: "database-database.staging.svc.cluster.local"
+  dbPort: "5432"
+  dbName: "appdb"
+  redisUrl: "redis://redis-redis.staging.svc.cluster.local:6379"
+  logLevel: "info"
+
+secrets:
+  dbUser: "staging_user"
+  dbPassword: "staging_password_456"
+
+autoscaling:
+  enabled: false
+
+environment: staging
+syncWave: "1"

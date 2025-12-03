@@ -1,0 +1,16 @@
+replicaCount: 2
+
+image:
+  repository: redis
+  tag: "7-alpine"
+
+resources:
+  limits:
+    memory: "1Gi"
+    cpu: "1000m"
+  requests:
+    memory: "512Mi"
+    cpu: "500m"
+
+environment: production
+syncWave: "0"

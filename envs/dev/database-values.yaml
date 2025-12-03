@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: postgres
+  tag: "15-alpine"
+
+resources:
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+  requests:
+    memory: "256Mi"
+    cpu: "200m"
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+secrets:
+  username: "dev_user"
+  password: "dev_password_123"
+  database: "appdb"
+
+environment: dev
+syncWave: "0"

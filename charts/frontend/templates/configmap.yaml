@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "frontend.fullname" . }}
+  labels:
+    {{- include "frontend.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "{{ .Values.syncWave }}"
+data:
+  backendUrl: {{ .Values.config.backendUrl | quote }}
+  logLevel: {{ .Values.config.logLevel | quote }}

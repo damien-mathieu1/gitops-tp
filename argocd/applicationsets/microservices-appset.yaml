@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: microservices
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - env: dev
+                  namespace: dev
+                - env: staging
+                  namespace: staging
+                - env: production
+                  namespace: production
+          - list:
+              elements:
+                - service: frontend
+                  syncWave: "2"
+                - service: backend
+                  syncWave: "1"
+                - service: database
+                  syncWave: "0"
+                - service: redis
+                  syncWave: "0"
+  template:
+    metadata:
+      name: '{{service}}-{{env}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/YOUR_USERNAME/gitops-argocd-tp.git
+        targetRevision: HEAD
+        path: 'charts/{{service}}'
+        helm:
+          valueFiles:
+            - '../../envs/{{env}}/{{service}}-values.yaml'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      ignoreDifferences:
+        - group: apps
+          kind: StatefulSet
+          jsonPointers:
+            - /spec/volumeClaimTemplates

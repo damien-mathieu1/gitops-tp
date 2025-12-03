@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "backend.fullname" . }}
+  labels:
+    {{- include "backend.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "{{ .Values.syncWave }}"
+data:
+  dbHost: {{ .Values.config.dbHost | quote }}
+  dbPort: {{ .Values.config.dbPort | quote }}
+  dbName: {{ .Values.config.dbName | quote }}
+  redisUrl: {{ .Values.config.redisUrl | quote }}
+  logLevel: {{ .Values.config.logLevel | quote }}

@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: your-registry/frontend
+  tag: "1.0.0"
+
+resources:
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+
+config:
+  backendUrl: "http://backend-backend:8080"
+  logLevel: "debug"
+
+ingress:
+  enabled: false
+
+autoscaling:
+  enabled: false
+
+environment: dev
+syncWave: "2"
